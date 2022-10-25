@@ -1,10 +1,13 @@
 package com.audax.cadastro.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.ObjectNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,42 +31,55 @@ public class UsersController {
 	UsersRepository usersRepository;
 
 	@GetMapping
-	public List<UsersDTO> list() {
+	public ResponseEntity<List<UsersDTO>> list() {
 
 		List<Users> lista = usersRepository.findAll();
-		return UsersDTO.toUsers(lista);
+		return ResponseEntity.ok(UsersDTO.toUsers(lista));
 	}
 	
 	@GetMapping("/{uuid}")
-	public UsersDTO list(@PathVariable String uuid) {
-		Users user = usersRepository.findByUuid(uuid);
-		return new UsersDTO(user);
+	public ResponseEntity<UsersDTO> list(@PathVariable String uuid) {
+		Optional<Users> list = usersRepository.findByUuid(uuid);
+		if(!list.isEmpty()) {
+			return ResponseEntity.ok(new UsersDTO(list.get()));
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@PostMapping
-	public void register(@RequestBody @Valid UsersForm usersForm) {
+	public ResponseEntity<UsersDTO> register(@RequestBody @Valid UsersForm usersForm) {
 		Users user = new Users(usersForm);
 		if (usersRepository.findByUsername(usersForm.getUsername()) != null) {
 			System.out.println("erro");
+			return ResponseEntity.badRequest().body(null);
 		} else {
 			usersRepository.save(user);
+			return ResponseEntity.created(null).body(new UsersDTO(user));
 		}
 	}
 	
 	@PutMapping("/{uuid}")
 	@Transactional
-	public UsersDTO lista(@PathVariable String uuid, @RequestBody @Valid UsersForm usersForm) {
-		Users atualizar = usersForm.atualizar(uuid, usersRepository);
+	public ResponseEntity<UsersDTO> update(@PathVariable String uuid, @RequestBody @Valid UsersForm usersForm) {
+		Optional<Users> findByUuid = usersRepository.findByUuid(uuid);
+		if (findByUuid.isPresent()) {
+			Users atualizar = usersForm.atualizar(uuid, usersRepository);
+			return ResponseEntity.ok(new UsersDTO(atualizar));
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 		
-		System.out.println("Nome usuário: " + usersForm.getUsername());
-		System.out.println("Senha usuário: " + usersForm.getPassword());
-		return new UsersDTO(atualizar);
 	}
 	
 	@DeleteMapping("/{uuid}")
-	public String delete(@PathVariable String uuid) {
-		Users deletar = usersRepository.findByUuid(uuid);
-		usersRepository.delete(deletar);
-		return "Deletado com Sucesso";
+	public ResponseEntity delete(@PathVariable String uuid) {
+		Optional<Users> deletar = usersRepository.findByUuid(uuid);
+		if (deletar.isPresent()) {
+			usersRepository.delete(deletar.get());
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 }

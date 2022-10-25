@@ -1,5 +1,7 @@
 package com.audax.cadastro.dto.form;
 
+import java.util.Optional;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -14,7 +16,7 @@ public class UsersForm {
 	@NotNull @NotEmpty @Length(min = 3, max = 150)
 	private String username;
 	
-	@NotNull @NotEmpty @Length(min = 8)
+	@NotNull @NotEmpty @Length(min = 8) 
 	private String password;
 
 	public UsersForm(String username, String password) {
@@ -42,10 +44,10 @@ public class UsersForm {
 	}
 
 	public Users atualizar(String uuid, UsersRepository usersRepository) {
-		Users user = usersRepository.findByUuid(uuid);
-		user.setPassword(new BCryptPasswordEncoder().encode(this.password));
-		user.setUsername(this.username);
-		return user;
+		Optional<Users> user = usersRepository.findByUuid(uuid);
+		user.get().setPassword(new BCryptPasswordEncoder().encode(this.password));
+		user.get().setUsername(this.username);
+		return user.get();
 	}
 
 }
