@@ -4,6 +4,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.audax.cadastro.model.Users;
+import com.audax.cadastro.repository.UsersRepository;
 
 public class UsersForm {
 	
@@ -35,6 +39,13 @@ public class UsersForm {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Users atualizar(String uuid, UsersRepository usersRepository) {
+		Users user = usersRepository.findByUuid(uuid);
+		user.setPassword(new BCryptPasswordEncoder().encode(this.password));
+		user.setUsername(this.username);
+		return user;
 	}
 
 }

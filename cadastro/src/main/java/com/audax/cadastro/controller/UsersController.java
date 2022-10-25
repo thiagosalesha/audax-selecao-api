@@ -5,9 +5,11 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,20 +27,20 @@ public class UsersController {
 	UsersRepository usersRepository;
 
 	@GetMapping
-	public List<UsersDTO> lista() {
+	public List<UsersDTO> list() {
 
 		List<Users> lista = usersRepository.findAll();
 		return UsersDTO.toUsers(lista);
 	}
 	
 	@GetMapping("/{uuid}")
-	public UsersDTO lista(@PathVariable String uuid) {
+	public UsersDTO list(@PathVariable String uuid) {
 		Users user = usersRepository.findByUuid(uuid);
 		return new UsersDTO(user);
 	}
 
 	@PostMapping
-	public void cadastrar(@RequestBody @Valid UsersForm usersForm) {
+	public void register(@RequestBody @Valid UsersForm usersForm) {
 		Users user = new Users(usersForm);
 		if (usersRepository.findByUsername(usersForm.getUsername()) != null) {
 			System.out.println("erro");
@@ -46,5 +48,14 @@ public class UsersController {
 			usersRepository.save(user);
 		}
 	}
-
+	
+	@PutMapping("/{uuid}")
+	@Transactional
+	public UsersDTO lista(@PathVariable String uuid, @RequestBody @Valid UsersForm usersForm) {
+		Users atualizar = usersForm.atualizar(uuid, usersRepository);
+		
+		System.out.println("Nome usuário: " + usersForm.getUsername());
+		System.out.println("Senha usuário: " + usersForm.getPassword());
+		return new UsersDTO(atualizar);
+	}
 }
