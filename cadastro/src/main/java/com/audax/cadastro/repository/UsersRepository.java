@@ -8,5 +8,7 @@ import com.audax.cadastro.model.Users;
 @Repository
 public interface UsersRepository extends JpaRepository<Users, Long> {
 
+	Object findByUsername(String username);
+
 
 }

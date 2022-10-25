@@ -1,6 +1,7 @@
 package com.audax.cadastro.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +11,7 @@ public class UsersDTO {
 
 	private String uuid;
 	private String username;
-	private LocalDate registeredAt;
+	private LocalDateTime registeredAt;
 
 	public UsersDTO(Users users) {
 		this.uuid = users.getUuid();
@@ -18,7 +19,7 @@ public class UsersDTO {
 		this.registeredAt = users.getRegisteredAt();
 	}
 
-	public UsersDTO(String uuid, String username, LocalDate registeredAt) {
+	public UsersDTO(String uuid, String username, LocalDateTime registeredAt) {
 		this.uuid = uuid;
 		this.username = username;
 		this.registeredAt = registeredAt;
@@ -40,11 +41,11 @@ public class UsersDTO {
 		this.username = username;
 	}
 
-	public LocalDate getRegisteredAt() {
+	public LocalDateTime getRegisteredAt() {
 		return registeredAt;
 	}
 
-	public void setRegisteredAt(LocalDate registeredAt) {
+	public void setRegisteredAt(LocalDateTime registeredAt) {
 		this.registeredAt = registeredAt;
 	}
 	

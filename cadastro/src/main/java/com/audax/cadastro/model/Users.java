@@ -2,6 +2,7 @@ package com.audax.cadastro.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,6 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.audax.cadastro.dto.form.UsersForm;
 
 @Entity
 public class Users {
@@ -19,16 +24,16 @@ public class Users {
 	private String uuid;
 	private String username;
 	private String password;
-	private LocalDate registeredAt;
+	private LocalDateTime registeredAt;
 
 	public Users() {
 	}
 
-	public Users(String uuid, String username, String password, LocalDate registeredAt) {
-		this.uuid = uuid;
-		this.username = username;
-		this.password = password;
-		this.registeredAt = registeredAt;
+	public Users(UsersForm usersForm) {
+		this.uuid = UUID.randomUUID().toString();
+		this.username = usersForm.getUsername();
+		this.password =  new BCryptPasswordEncoder().encode(usersForm.getPassword());
+		this.registeredAt = LocalDateTime.now();
 	}
 
 	public Long getId() {
@@ -63,11 +68,11 @@ public class Users {
 		this.password = password;
 	}
 
-	public LocalDate getRegisteredAt() {
+	public LocalDateTime getRegisteredAt() {
 		return registeredAt;
 	}
 
-	public void setRegisteredAt(LocalDate registeredAt) {
+	public void setRegisteredAt(LocalDateTime registeredAt) {
 		this.registeredAt = registeredAt;
 	}
 
