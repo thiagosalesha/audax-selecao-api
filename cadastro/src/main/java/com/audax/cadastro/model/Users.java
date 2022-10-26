@@ -2,6 +2,8 @@ package com.audax.cadastro.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -30,6 +32,7 @@ public class Users {
 	}
 
 	public Users(UsersForm usersForm) {
+		
 		this.uuid = UUID.randomUUID().toString();
 		this.username = usersForm.getUsername();
 		this.password =  new BCryptPasswordEncoder().encode(usersForm.getPassword());

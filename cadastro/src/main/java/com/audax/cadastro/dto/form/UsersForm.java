@@ -13,10 +13,14 @@ import com.audax.cadastro.repository.UsersRepository;
 
 public class UsersForm {
 	
-	@NotNull @NotEmpty @Length(min = 3, max = 150)
+	@NotNull (message = "O nome do usuário não pode ser nulo!") 
+	@NotEmpty (message = "O nome do usuário não pode estar vazio!")
+	@Length(min = 3, max = 150, message = "O nome do usário deve conter no mínimo 3 até 150 caracteres!")
 	private String username;
 	
-	@NotNull @NotEmpty @Length(min = 8) 
+	@NotNull (message = "A senha do usuário não pode ser nulo!") 
+	@NotEmpty (message = "A senha do usuário não pode estar vazia!")
+	@Length(min = 8, message = "A senha do usário deve conter no mínimo 8 caracteres!") 
 	private String password;
 
 	public UsersForm(String username, String password) {

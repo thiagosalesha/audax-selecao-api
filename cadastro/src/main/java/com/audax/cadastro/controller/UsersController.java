@@ -52,9 +52,12 @@ public class UsersController {
 	@PostMapping
 	public ResponseEntity<UsersDTO> register(@RequestBody @Valid UsersForm usersForm) {
 		Users user = new Users(usersForm);
-		usersRepository.save(user);
-		return ResponseEntity.created(null).body(new UsersDTO(user));
-		
+		if(usersRepository.findByUsername(usersForm.getUsername()) == null) {
+			usersRepository.save(user);
+			return ResponseEntity.created(null).body(new UsersDTO(user));
+		} else {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username já está sendo utilizado");
+		}
 	}
 	
 	@PutMapping("/{uuid}")
