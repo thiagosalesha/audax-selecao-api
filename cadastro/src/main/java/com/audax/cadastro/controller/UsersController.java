@@ -3,6 +3,7 @@ package com.audax.cadastro.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.hibernate.ObjectNotFoundException;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.audax.cadastro.dto.UsersDTO;
 import com.audax.cadastro.dto.form.UsersForm;
@@ -43,20 +45,16 @@ public class UsersController {
 		if(!list.isEmpty()) {
 			return ResponseEntity.ok(new UsersDTO(list.get()));
 		} else {
-			return ResponseEntity.notFound().build();
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
 		}
 	}
 
 	@PostMapping
 	public ResponseEntity<UsersDTO> register(@RequestBody @Valid UsersForm usersForm) {
 		Users user = new Users(usersForm);
-		if (usersRepository.findByUsername(usersForm.getUsername()) != null) {
-			System.out.println("erro");
-			return ResponseEntity.badRequest().body(null);
-		} else {
-			usersRepository.save(user);
-			return ResponseEntity.created(null).body(new UsersDTO(user));
-		}
+		usersRepository.save(user);
+		return ResponseEntity.created(null).body(new UsersDTO(user));
+		
 	}
 	
 	@PutMapping("/{uuid}")
@@ -67,19 +65,19 @@ public class UsersController {
 			Users atualizar = usersForm.atualizar(uuid, usersRepository);
 			return ResponseEntity.ok(new UsersDTO(atualizar));
 		} else {
-			return ResponseEntity.notFound().build();
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
 		}
 		
 	}
 	
 	@DeleteMapping("/{uuid}")
-	public ResponseEntity delete(@PathVariable String uuid) {
+	public ResponseEntity delete(@PathVariable String uuid, HttpServletResponse response) {
 		Optional<Users> deletar = usersRepository.findByUuid(uuid);
 		if (deletar.isPresent()) {
 			usersRepository.delete(deletar.get());
-			return ResponseEntity.noContent().build();
+			return  ResponseEntity.noContent().build();	
 		} else {
-			return ResponseEntity.notFound().build();
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
 		}
 	}
 }
