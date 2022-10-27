@@ -6,16 +6,19 @@ import org.springframework.boot.jackson.JsonObjectDeserializer;
 import com.audax.cadastro.dto.UsersDTO;
 import com.audax.cadastro.dto.UsersPostDTO;
 import com.audax.cadastro.model.Users;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ArticleForm {
 	private String title;
 	private String resume;
 	private String text;
-	private JSONObject User;
+	
+	@JsonProperty("User")
+	private UsersPostDTO User;
 
 	
 
-	public ArticleForm(String title, String resume, String text, JSONObject user) {
+	public ArticleForm(String title, String resume, String text, UsersPostDTO user) {
 		this.title = title;
 		this.resume = resume;
 		this.text = text;
@@ -50,11 +53,11 @@ public class ArticleForm {
 		this.text = text;
 	}
 
-	public JSONObject getUser() {
+	public UsersPostDTO getUser() {
 		return User;
 	}
 
-	public void setUser(JSONObject user) {
+	public void setUser(UsersPostDTO user) {
 		User = user;
 	}
 

@@ -17,10 +17,9 @@ public class ArticlesController {
 	@PostMapping
 	public ResponseEntity<ArticlesDTO> register(@RequestBody ArticleForm articleForm) {
 		System.out.println(articleForm.getTitle()); 
-		if (articleForm.getUser().isNull("uuid"))
-		{
-			System.out.println("JSON vazio");
-		}
+		System.out.println(articleForm.getUser().getUuid());
+		
+		
 		return null;
 	}
 }
