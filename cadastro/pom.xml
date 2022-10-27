@@ -58,6 +58,14 @@
 			<version>20220924</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.github.slugify/slugify -->
+		<dependency>
+			<groupId>com.github.slugify</groupId>
+			<artifactId>slugify</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

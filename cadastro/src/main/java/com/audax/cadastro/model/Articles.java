@@ -1,6 +1,8 @@
 package com.audax.cadastro.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.audax.cadastro.dto.ArticlesDTO;
+import com.github.slugify.Slugify;
+
 @Entity
 public class Articles {
 
@@ -17,29 +22,32 @@ public class Articles {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Users user;
 	
-	private String uuid;
+	private String uuid; 
 	private String title;
 	private String resume;
 	private String text;
-	private String slug;
-	private LocalDate registeredAt;
+	private String slug; 
+	private LocalDateTime registeredAt; 
+
 
 	public Articles() {
 	}
 
-	public Articles(Users user, String uuid, String title, String resume, String text, String slug,
-			LocalDate registeredAt) {
+	public Articles(Users user, String uuid, String title, String resume, String text) {
+		final Slugify slg = Slugify.builder().build();	
+		
 		this.user = user;
-		this.uuid = uuid;
+		this.uuid = UUID.randomUUID().toString();
 		this.title = title;
 		this.resume = resume;
 		this.text = text;
-		this.slug = slug;
-		this.registeredAt = registeredAt;
+		this.slug = slg.slugify(title);
+		this.registeredAt = LocalDateTime.now();
 	}
+	
 
 	public Long getId() {
 		return id;
@@ -70,7 +78,8 @@ public class Articles {
 	}
 
 	public void setTitle(String title) {
-		this.title = title;
+		Slugify slg = Slugify.builder().build();		
+		this.title = slg.slugify(title);
 	}
 
 	public String getResume() {
@@ -97,11 +106,11 @@ public class Articles {
 		this.slug = slug;
 	}
 
-	public LocalDate getRegisteredAt() {
+	public LocalDateTime getRegisteredAt() {
 		return registeredAt;
 	}
 
-	public void setRegisteredAt(LocalDate registeredAt) {
+	public void setRegisteredAt(LocalDateTime registeredAt) {
 		this.registeredAt = registeredAt;
 	}
 

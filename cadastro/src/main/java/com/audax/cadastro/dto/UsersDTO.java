@@ -49,7 +49,7 @@ public class UsersDTO {
 		this.registeredAt = registeredAt;
 	}
 	
-	public static List<UsersDTO> toUsers(List<Users> listUsers) {
+	public static List<UsersDTO> toUsersDTO(List<Users> listUsers) {
 		return listUsers.stream().map(UsersDTO::new).collect(Collectors.toList());
 	}
 

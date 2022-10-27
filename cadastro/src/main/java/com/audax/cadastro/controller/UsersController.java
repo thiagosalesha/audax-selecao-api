@@ -23,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.audax.cadastro.dto.UsersDTO;
 import com.audax.cadastro.dto.form.UsersForm;
 import com.audax.cadastro.model.Users;
+import com.audax.cadastro.repository.ArticlesRepository;
 import com.audax.cadastro.repository.UsersRepository;
 
 @RestController
@@ -31,23 +32,9 @@ public class UsersController {
 
 	@Autowired
 	UsersRepository usersRepository;
-
-	@GetMapping
-	public ResponseEntity<List<UsersDTO>> list() {
-
-		List<Users> lista = usersRepository.findAll();
-		return ResponseEntity.ok(UsersDTO.toUsers(lista));
-	}
 	
-	@GetMapping("/{uuid}")
-	public ResponseEntity<UsersDTO> list(@PathVariable String uuid) {
-		Optional<Users> list = usersRepository.findByUuid(uuid);
-		if(!list.isEmpty()) {
-			return ResponseEntity.ok(new UsersDTO(list.get()));
-		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-		}
-	}
+	@Autowired
+	ArticlesRepository articlesRepository;
 
 	@PostMapping
 	public ResponseEntity<UsersDTO> register(@RequestBody @Valid UsersForm usersForm) {
@@ -60,6 +47,26 @@ public class UsersController {
 		}
 	}
 	
+	
+	@GetMapping
+	public ResponseEntity<List<UsersDTO>> list() {
+
+		List<Users> lista = usersRepository.findAll();
+		return ResponseEntity.ok(UsersDTO.toUsersDTO(lista));
+	}
+	
+	@GetMapping("/{uuid}")
+	public ResponseEntity<UsersDTO> list(@PathVariable String uuid) {
+		Optional<Users> list = usersRepository.findByUuid(uuid);
+		if(!list.isEmpty()) {
+			return ResponseEntity.ok(new UsersDTO(list.get()));
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não existe");
+		}
+	}
+
+
+	
 	@PutMapping("/{uuid}")
 	@Transactional
 	public ResponseEntity<UsersDTO> update(@PathVariable String uuid, @RequestBody @Valid UsersForm usersForm) {
@@ -68,19 +75,24 @@ public class UsersController {
 			Users atualizar = usersForm.atualizar(uuid, usersRepository);
 			return ResponseEntity.ok(new UsersDTO(atualizar));
 		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não existe");
 		}
 		
 	}
 	
 	@DeleteMapping("/{uuid}")
-	public ResponseEntity delete(@PathVariable String uuid, HttpServletResponse response) {
+	public ResponseEntity<?> delete(@PathVariable String uuid) {
 		Optional<Users> deletar = usersRepository.findByUuid(uuid);
 		if (deletar.isPresent()) {
+			if (articlesRepository.findByUser(deletar.get()).isPresent()) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário possui artigo cadastrado.");
+			}
 			usersRepository.delete(deletar.get());
 			return  ResponseEntity.noContent().build();	
 		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não existe");
 		}
 	}
+	
+
 }
