@@ -1,17 +1,14 @@
 package com.audax.cadastro.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -26,7 +23,7 @@ public class Users {
 	private String uuid;
 	private String username;
 	private String password;
-	private LocalDateTime registeredAt;
+	private ZonedDateTime registeredAt;
 
 	public Users() {
 	}
@@ -36,7 +33,8 @@ public class Users {
 		this.uuid = UUID.randomUUID().toString();
 		this.username = usersForm.getUsername();
 		this.password =  new BCryptPasswordEncoder().encode(usersForm.getPassword());
-		this.registeredAt = LocalDateTime.now();
+		LocalDateTime ldt = LocalDateTime.now();
+		this.registeredAt = ZonedDateTime.of(ldt, ZoneId.of("America/Sao_Paulo"));
 	}
 
 	public Long getId() {
@@ -71,11 +69,11 @@ public class Users {
 		this.password = password;
 	}
 
-	public LocalDateTime getRegisteredAt() {
+	public ZonedDateTime getRegisteredAt() {
 		return registeredAt;
 	}
 
-	public void setRegisteredAt(LocalDateTime registeredAt) {
+	public void setRegisteredAt(ZonedDateTime registeredAt) {
 		this.registeredAt = registeredAt;
 	}
 

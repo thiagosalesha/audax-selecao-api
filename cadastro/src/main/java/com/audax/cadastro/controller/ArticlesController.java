@@ -41,7 +41,7 @@ public class ArticlesController {
 	@Autowired
 	ArticlesRepository articlesRepository;
 	
-	@PostMapping
+	@PostMapping //checado
 	public ResponseEntity<ArticlesDTO> register(@RequestBody @Valid ArticleForm articleForm) { 
 		Optional<Users> usersOptional = usersRepository.findByUuid(articleForm.getUser().getUuid());
 		Users users = new Users();
