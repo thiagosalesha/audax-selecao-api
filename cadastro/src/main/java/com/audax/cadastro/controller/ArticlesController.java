@@ -50,6 +50,12 @@ public class ArticlesController {
 		} else {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário não existe");
 		}
+		
+		Optional<Articles> searchTitle = articlesRepository.findByTitle(articleForm.getTitle());
+		if (searchTitle.isPresent() && articleForm.getTitle().equals(searchTitle.get().getTitle())) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Título já cadastrado");
+		}
+		
 		Articles articles = new Articles(users, users.getUuid(), articleForm.getTitle(), 
 				articleForm.getResume(), articleForm.getText());
 		

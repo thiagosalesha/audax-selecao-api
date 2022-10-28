@@ -2,6 +2,9 @@ package com.audax.cadastro.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -30,7 +33,7 @@ public class Articles {
 	private String resume;
 	private String text;
 	private String slug; 
-	private LocalDateTime registeredAt; 
+	private ZonedDateTime registeredAt; 
 
 
 	public Articles() {
@@ -38,14 +41,14 @@ public class Articles {
 
 	public Articles(Users user, String uuid, String title, String resume, String text) {
 		final Slugify slg = Slugify.builder().build();	
-		
 		this.user = user;
 		this.uuid = UUID.randomUUID().toString();
 		this.title = title;
 		this.resume = resume;
 		this.text = text;
 		this.slug = slg.slugify(title);
-		this.registeredAt = LocalDateTime.now();
+		LocalDateTime ldt = LocalDateTime.now();
+		this.registeredAt = ZonedDateTime.of(ldt, ZoneId.of("America/Sao_Paulo"));
 	}
 	
 
@@ -106,12 +109,14 @@ public class Articles {
 		this.slug = slug;
 	}
 
-	public LocalDateTime getRegisteredAt() {
+	public ZonedDateTime getRegisteredAt() {
 		return registeredAt;
 	}
 
-	public void setRegisteredAt(LocalDateTime registeredAt) {
+	public void setRegisteredAt(ZonedDateTime registeredAt) {
 		this.registeredAt = registeredAt;
+		
 	}
+	
 
 }

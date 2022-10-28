@@ -5,9 +5,12 @@ public class ErroPostDTO {
 	private String message;
 	private String field;
 
-	public ErroPostDTO(String field, String message) {
-		this.field = field;
+
+
+	public ErroPostDTO( String message, String field) {
+
 		this.message = message;
+		this.field = field;
 	}
 
 	public ErroPostDTO() {
@@ -29,4 +32,7 @@ public class ErroPostDTO {
 		this.field = field;
 	}
 
+
+	
+	
 }

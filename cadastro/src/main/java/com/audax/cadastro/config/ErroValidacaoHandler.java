@@ -23,7 +23,6 @@ public class ErroValidacaoHandler {
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		List<ErroPostDTO> erroDTO = new ArrayList<>();
 		fieldErrors.forEach(e -> {
-		//	ErroDTO erroFormDTO = new ErroDTO(e.getDefaultMessage(), e.getField());
 			ErroPostDTO erroFormDTO = new ErroPostDTO(e.getField(), e.getDefaultMessage());
 			erroDTO.add(erroFormDTO);
 		});
@@ -34,7 +33,6 @@ public class ErroValidacaoHandler {
 	@ExceptionHandler(ResponseStatusException.class)
 	public List<ErroNotFoundDTO> handle(ResponseStatusException exception) {
 		String message = exception.getReason();
-		System.out.println("Valor message: " + message);
 		List<ErroNotFoundDTO> errorList = new ArrayList<>();
 		errorList.add(new ErroNotFoundDTO(message));
 		return errorList;
