@@ -1,4 +1,4 @@
-package com.audax.cadastro.dto;
+package com.selecaoEstagio.cadastro.dto;
 
 public class ErroPostDTO {
 

@@ -1,4 +1,4 @@
-package com.audax.cadastro.model;
+package com.selecaoEstagio.cadastro.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,8 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.audax.cadastro.dto.ArticlesDTO;
 import com.github.slugify.Slugify;
+import com.selecaoEstagio.cadastro.dto.ArticlesDTO;
 
 @Entity
 public class Articles {

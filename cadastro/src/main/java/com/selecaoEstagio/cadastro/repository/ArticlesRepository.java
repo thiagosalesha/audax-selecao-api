@@ -1,12 +1,12 @@
-package com.audax.cadastro.repository;
+package com.selecaoEstagio.cadastro.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.audax.cadastro.model.Articles;
-import com.audax.cadastro.model.Users;
+import com.selecaoEstagio.cadastro.model.Articles;
+import com.selecaoEstagio.cadastro.model.Users;
 
 @Repository
 public interface ArticlesRepository extends JpaRepository<Articles, Long>{

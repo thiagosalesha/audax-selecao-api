@@ -1,4 +1,4 @@
-package com.audax.cadastro.controller;
+package com.selecaoEstagio.cadastro.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,14 +22,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.audax.cadastro.dto.ArticlesDTO;
-import com.audax.cadastro.dto.UsersDTO;
-import com.audax.cadastro.dto.form.ArticleForm;
-import com.audax.cadastro.dto.form.UsersForm;
-import com.audax.cadastro.model.Articles;
-import com.audax.cadastro.model.Users;
-import com.audax.cadastro.repository.ArticlesRepository;
-import com.audax.cadastro.repository.UsersRepository;
+import com.selecaoEstagio.cadastro.dto.ArticlesDTO;
+import com.selecaoEstagio.cadastro.dto.UsersDTO;
+import com.selecaoEstagio.cadastro.dto.form.ArticleForm;
+import com.selecaoEstagio.cadastro.dto.form.UsersForm;
+import com.selecaoEstagio.cadastro.model.Articles;
+import com.selecaoEstagio.cadastro.model.Users;
+import com.selecaoEstagio.cadastro.repository.ArticlesRepository;
+import com.selecaoEstagio.cadastro.repository.UsersRepository;
 
 @RestController
 @RequestMapping("article")

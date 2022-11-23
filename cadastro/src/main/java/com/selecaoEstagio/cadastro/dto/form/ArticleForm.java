@@ -1,4 +1,4 @@
-package com.audax.cadastro.dto.form;
+package com.selecaoEstagio.cadastro.dto.form;
 
 import java.util.Optional;
 
@@ -10,11 +10,11 @@ import org.json.JSONObject;
 import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.audax.cadastro.dto.UsersDTO;
-import com.audax.cadastro.model.Articles;
-import com.audax.cadastro.model.Users;
-import com.audax.cadastro.repository.ArticlesRepository;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.selecaoEstagio.cadastro.dto.UsersDTO;
+import com.selecaoEstagio.cadastro.model.Articles;
+import com.selecaoEstagio.cadastro.model.Users;
+import com.selecaoEstagio.cadastro.repository.ArticlesRepository;
 
 public class ArticleForm {
 	@NotEmpty (message = "O título não pode ser vazio")

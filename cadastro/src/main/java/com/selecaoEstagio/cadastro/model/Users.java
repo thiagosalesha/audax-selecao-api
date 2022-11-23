@@ -1,4 +1,4 @@
-package com.audax.cadastro.model;
+package com.selecaoEstagio.cadastro.model;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -12,7 +12,7 @@ import javax.persistence.Id;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.audax.cadastro.dto.form.UsersForm;
+import com.selecaoEstagio.cadastro.dto.form.UsersForm;
 
 @Entity
 public class Users {

@@ -1,10 +1,10 @@
-package com.audax.cadastro.dto;
+package com.selecaoEstagio.cadastro.dto;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.audax.cadastro.model.Users;
+import com.selecaoEstagio.cadastro.model.Users;
 
 public class UsersDTO {
 

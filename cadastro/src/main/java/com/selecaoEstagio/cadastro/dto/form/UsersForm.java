@@ -1,4 +1,4 @@
-package com.audax.cadastro.dto.form;
+package com.selecaoEstagio.cadastro.dto.form;
 
 import java.util.Optional;
 
@@ -8,8 +8,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.audax.cadastro.model.Users;
-import com.audax.cadastro.repository.UsersRepository;
+import com.selecaoEstagio.cadastro.model.Users;
+import com.selecaoEstagio.cadastro.repository.UsersRepository;
 
 public class UsersForm {
 	

@@ -1,4 +1,4 @@
-package com.audax.cadastro.config;
+package com.selecaoEstagio.cadastro.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.handler.ResponseStatusExceptionHandler;
 import org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver;
 
-import com.audax.cadastro.dto.ErroNotFoundDTO;
-import com.audax.cadastro.dto.ErroPostDTO;
+import com.selecaoEstagio.cadastro.dto.ErroNotFoundDTO;
+import com.selecaoEstagio.cadastro.dto.ErroPostDTO;
 
 @RestControllerAdvice
 public class ErroValidacaoHandler {
