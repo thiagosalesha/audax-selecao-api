@@ -1,5 +1,3 @@
-# audax-selecao-api
-
     Desafio: Criação de uma API para realizar cadastros de artigos
       
       Requisitos:
